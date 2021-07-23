@@ -33,6 +33,11 @@ migrate = Migrate(app, db)
 # ----------------------------------------------------------------------------#
 # Models.
 # ----------------------------------------------------------------------------#
+Show = db.Table("Show",
+                db.Column("venue_pk_fk", db.Integer(), db.ForeignKey("venue.id"), primary_key=True),
+                db.Column("artist_pk_fk", db.Integer(), db.ForeignKey("artist.id"), primary_key=True)
+                )
+
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
@@ -49,8 +54,9 @@ class Venue(db.Model):
     website_link = db.Column(db.String(500), nullable=False, unique=True)
     looking_for_talent = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
+    artist_fk = db.relationship("Artist", secondary=Show, backref=db.backref("venues", lazy=True))
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    # TODO: implement any missing fields, as a database migration using Flask-Migrate (Partially DONE)
 
 
 class Artist(db.Model):
@@ -68,10 +74,11 @@ class Artist(db.Model):
     looking_for_venues = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    # TODO: implement any missing fields, as a database migration using Flask-Migrate (Partially DONE)
 
 
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+
 
 # ----------------------------------------------------------------------------#
 # Filters.
