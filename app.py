@@ -11,6 +11,8 @@ from flask_sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
+from flask_migrate import Migrate
+
 from forms import *
 
 # ----------------------------------------------------------------------------#
@@ -20,8 +22,10 @@ from forms import *
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
 
 # TODO: connect to a local postgresql database (DONE)
 
@@ -52,14 +56,17 @@ class Venue(db.Model):
 class Artist(db.Model):
     __tablename__ = 'Artist'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    city = db.Column(db.String(120))
-    state = db.Column(db.String(120))
-    phone = db.Column(db.String(120))
-    genres = db.Column(db.String(120))
-    image_link = db.Column(db.String(500))
-    facebook_link = db.Column(db.String(120))
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    city = db.Column(db.String(120), nullable=False)
+    state = db.Column(db.String(120), nullable=False)
+    phone = db.Column(db.String(120), nullable=False)
+    genres = db.Column(db.String(120), nullable=False)
+    facebook_link = db.Column(db.String(120), nullable=True, unique=True)
+    image_link = db.Column(db.String(500), nullable=False, unique=True)
+    website_link = db.Column(db.String(500), nullable=True, unique=True)
+    looking_for_venues = db.Column(db.Boolean(), nullable=True)
+    seeking_description = db.Column(db.String(), nullable=True)
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
