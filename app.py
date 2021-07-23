@@ -23,7 +23,8 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 
-# TODO: connect to a local postgresql database
+# TODO: connect to a local postgresql database (DONE)
+
 
 # ----------------------------------------------------------------------------#
 # Models.
@@ -32,14 +33,18 @@ db = SQLAlchemy(app)
 class Venue(db.Model):
     __tablename__ = 'Venue'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    city = db.Column(db.String(120))
-    state = db.Column(db.String(120))
-    address = db.Column(db.String(120))
-    phone = db.Column(db.String(120))
-    image_link = db.Column(db.String(500))
-    facebook_link = db.Column(db.String(120))
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    city = db.Column(db.String(120), nullable=False)
+    state = db.Column(db.String(120), nullable=False)
+    address = db.Column(db.String(120), nullable=False)
+    phone = db.Column(db.String(120), nullable=False)
+    genres = db.Column(db.String(120), nullable=False)
+    facebook_link = db.Column(db.String(120), nullable=True, unique=True)
+    image_link = db.Column(db.String(500), nullable=False, unique=True)
+    website_link = db.Column(db.String(500), nullable=False, unique=True)
+    looking_for_talent = db.Column(db.Boolean(), nullable=True)
+    seeking_description = db.Column(db.String(), nullable=True)
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
