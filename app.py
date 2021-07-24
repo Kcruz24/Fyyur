@@ -35,7 +35,8 @@ migrate = Migrate(app, db)
 # ----------------------------------------------------------------------------#
 show = db.Table("Show",
                 db.Column("venue_pk_fk", db.Integer(), db.ForeignKey('venue.id'), primary_key=True),
-                db.Column("artist_pk_fk", db.Integer(), db.ForeignKey('artist.id'), primary_key=True)
+                db.Column("artist_pk_fk", db.Integer(), db.ForeignKey('artist.id'), primary_key=True),
+                db.Column("start_time", db.String(), nullable=False)
                 )
 
 
@@ -55,7 +56,7 @@ class Venue(db.Model):
     seeking_description = db.Column(db.String(), nullable=True)
     artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate (Partially DONE)
+    # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
 
 class Artist(db.Model):
@@ -73,10 +74,10 @@ class Artist(db.Model):
     looking_for_venues = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate (Partially DONE)
+    # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
 
-# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration. (DONE)
 
 
 # ----------------------------------------------------------------------------#
@@ -132,7 +133,8 @@ def venues():
             "num_upcoming_shows": 0,
         }]
     }]
-    return render_template('pages/venues.html', areas=data);
+
+    return render_template('pages/venues.html', areas=data)
 
 
 @app.route('/venues/search', methods=['POST'])
