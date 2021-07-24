@@ -119,9 +119,33 @@ def index():
 def venues():
     # TODO: replace with real venues data.
     #       num_shows should be aggregated based on number of upcoming shows per venue. (Partially DONE)
-    data2 = Venue.query.all()
-    venuesData = Venue.query.with_entities(Venue.id, Venue.name).all()
+    # data2 = Venue.query.all()
+    # venuesData = Venue.query.with_entities(Venue.id, Venue.name).all()
+    places = Venue.query.with_entities(Venue.city, Venue.state).all()
+    all_venues = Venue.query.all()
 
+    localAreas = []
+
+    for place in places:
+        temp_venues = []
+
+        for venue in all_venues:
+            if venue.city == place.city and venue.state == place.state:
+                temp_venues.append({
+                    "id": venue.id,
+                    "name": venue.name
+                })
+
+        localAreas.append({
+            "city": place.city,
+            "state": place.state,
+            "venues": temp_venues
+        })
+
+    # print(localAreas)
+    # print(localAreas[0].get("city"))
+    # print(localAreas[0].get("venues"))
+    # print(localAreas[0].get("venues")[0].get("name"))
     # data = [{
     #     "city": "San Francisco",
     #     "state": "CA",
@@ -144,7 +168,7 @@ def venues():
     #     }]
     # }]
 
-    return render_template('pages/venues.html', areas=data2, venues=venuesData)
+    return render_template('pages/venues.html', areas=localAreas)
 
 
 @app.route('/venues/search', methods=['POST'])
