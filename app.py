@@ -14,6 +14,7 @@ import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from flask_migrate import Migrate
+from sqlalchemy import String
 
 from forms import *
 
@@ -51,11 +52,11 @@ class Venue(db.Model):
     state = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(120), nullable=False)
-    genres = db.Column(db.String(120), nullable=False)
+    genres = db.Column(db.ARRAY(String), nullable=False)
     facebook_link = db.Column(db.String(120), nullable=True, unique=True)
     image_link = db.Column(db.String(500), nullable=False, unique=True)
     website_link = db.Column(db.String(500), nullable=False, unique=True)
-    looking_for_talent = db.Column(db.Boolean(), nullable=True)
+    seeking_talent = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
     artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
@@ -73,11 +74,11 @@ class Artist(db.Model):
     city = db.Column(db.String(120), nullable=False)
     state = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(120), nullable=False)
-    genres = db.Column(db.String(120), nullable=False)
+    genres = db.Column(db.ARRAY(String), nullable=False)
     facebook_link = db.Column(db.String(120), nullable=True, unique=True)
     image_link = db.Column(db.String(500), nullable=False, unique=True)
     website_link = db.Column(db.String(500), nullable=True, unique=True)
-    looking_for_venues = db.Column(db.Boolean(), nullable=True)
+    seeking_venues = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
 
     def __repr__(self):
@@ -322,7 +323,7 @@ def create_venue_submission():
 
         new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
                           genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
-                          website_link=req_website_link, looking_for_talent=req_seeking_talent,
+                          website_link=req_website_link, seeking_talent=req_seeking_talent,
                           seeking_description=req_seeking_description)
 
         db.session.add(new_venue)
@@ -340,7 +341,7 @@ def create_venue_submission():
         body["facebook_link"] = new_venue.facebook_link
         body["image_link"] = new_venue.image_link
         body["website_link"] = new_venue.website_link
-        body["seeking_talent"] = new_venue.looking_for_talent
+        body["seeking_talent"] = new_venue.seeking_talent
         body["seeking_description"] = new_venue.seeking_description
     except():
         db.session.rollback()
