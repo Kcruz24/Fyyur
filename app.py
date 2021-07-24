@@ -119,9 +119,7 @@ def index():
 def venues():
     # TODO: replace with real venues data.
     #       num_shows should be aggregated based on number of upcoming shows per venue. (Partially DONE)
-    # data2 = Venue.query.all()
-    # venuesData = Venue.query.with_entities(Venue.id, Venue.name).all()
-    places = Venue.query.with_entities(Venue.city, Venue.state).all()
+    places = Venue.query.distinct(Venue.city, Venue.state).all()
     all_venues = Venue.query.all()
 
     localAreas = []
