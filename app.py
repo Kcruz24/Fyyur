@@ -57,6 +57,9 @@ class Venue(db.Model):
     seeking_description = db.Column(db.String(), nullable=True)
     artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
+    def __repr__(self):
+        return f"<Table id: {self.id}, name: {self.name}"
+
     # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
 
@@ -74,6 +77,9 @@ class Artist(db.Model):
     website_link = db.Column(db.String(500), nullable=True, unique=True)
     looking_for_venues = db.Column(db.Boolean(), nullable=True)
     seeking_description = db.Column(db.String(), nullable=True)
+
+    def __repr__(self):
+        print(f"<Table id: {self.id}, name: {self.name}")
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
@@ -112,30 +118,33 @@ def index():
 @app.route('/venues')
 def venues():
     # TODO: replace with real venues data.
-    #       num_shows should be aggregated based on number of upcoming shows per venue.
-    data = [{
-        "city": "San Francisco",
-        "state": "CA",
-        "venues": [{
-            "id": 1,
-            "name": "The Musical Hop",
-            "num_upcoming_shows": 0,
-        }, {
-            "id": 3,
-            "name": "Park Square Live Music & Coffee",
-            "num_upcoming_shows": 1,
-        }]
-    }, {
-        "city": "New York",
-        "state": "NY",
-        "venues": [{
-            "id": 2,
-            "name": "The Dueling Pianos Bar",
-            "num_upcoming_shows": 0,
-        }]
-    }]
+    #       num_shows should be aggregated based on number of upcoming shows per venue. (Partially DONE)
+    data2 = Venue.query.all()
+    venuesData = Venue.query.with_entities(Venue.id, Venue.name).all()
 
-    return render_template('pages/venues.html', areas=data)
+    # data = [{
+    #     "city": "San Francisco",
+    #     "state": "CA",
+    #     "venues": [{
+    #         "id": 1,
+    #         "name": "The Musical Hop",
+    #         "num_upcoming_shows": 0,
+    #     }, {
+    #         "id": 3,
+    #         "name": "Park Square Live Music & Coffee",
+    #         "num_upcoming_shows": 1,
+    #     }]
+    # }, {
+    #     "city": "New York",
+    #     "state": "NY",
+    #     "venues": [{
+    #         "id": 2,
+    #         "name": "The Dueling Pianos Bar",
+    #         "num_upcoming_shows": 0,
+    #     }]
+    # }]
+
+    return render_template('pages/venues.html', areas=data2, venues=venuesData)
 
 
 @app.route('/venues/search', methods=['POST'])
@@ -143,6 +152,9 @@ def search_venues():
     # TODO: implement search on artists with partial string search. Ensure it is case-insensitive.
     # seach for Hop should return "The Musical Hop".
     # search for "Music" should return "The Musical Hop" and "Park Square Live Music & Coffee"
+
+    # response2 = Venue.query.filter(Venue.name.ilike('%'))
+
     response = {
         "count": 1,
         "data": [{
@@ -245,7 +257,10 @@ def show_venue(venue_id):
         "upcoming_shows_count": 1,
     }
     data = list(filter(lambda d: d['id'] == venue_id, [data1, data2, data3]))[0]
-    return render_template('pages/show_venue.html', venue=data)
+
+    data2 = Venue.query.get(venue_id)
+
+    return render_template('pages/show_venue.html', venue=data2)
 
 
 #  Create Venue
