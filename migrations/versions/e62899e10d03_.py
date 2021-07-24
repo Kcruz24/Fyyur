@@ -1,4 +1,4 @@
-"""empty message
+"""Create all models: Show, Venue, & Artist
 
 Revision ID: e62899e10d03
 Revises: 
