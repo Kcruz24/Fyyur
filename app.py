@@ -34,8 +34,9 @@ migrate = Migrate(app, db)
 # Models.
 # ----------------------------------------------------------------------------#
 show = db.Table("Show",
-                db.Column("venue_pk_fk", db.Integer(), db.ForeignKey('venue.id'), primary_key=True),
-                db.Column("artist_pk_fk", db.Integer(), db.ForeignKey('artist.id'), primary_key=True),
+                db.Column("id", db.Integer(), primary_key=True),
+                db.Column("venue_fk1", db.Integer(), db.ForeignKey('venue.id')),
+                db.Column("artist_fk2", db.Integer(), db.ForeignKey('artist.id')),
                 db.Column("start_time", db.String(), nullable=False)
                 )
 
