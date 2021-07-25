@@ -121,27 +121,11 @@ def index():
 @app.route('/venues')
 def venues():
     # TODO: replace with real venues data.
-    #       num_shows should be aggregated based on number of upcoming shows per venue. (Partially DONE)
+    #       num_shows should be aggregated based on number of upcoming shows per venue.
+    #       FALTA: falta lo de los num_shows (Partially DONE)
+
     places = Venue.query.distinct(Venue.city, Venue.state).all()
     all_venues = Venue.query.all()
-
-    localAreas = []
-
-    for place in places:
-        temp_venues = []
-
-        for venue in all_venues:
-            if venue.city == place.city and venue.state == place.state:
-                temp_venues.append({
-                    "id": venue.id,
-                    "name": venue.name
-                })
-
-        localAreas.append({
-            "city": place.city,
-            "state": place.state,
-            "venues": temp_venues
-        })
 
     # print(localAreas)
     # print(localAreas[0].get("city"))
@@ -169,7 +153,7 @@ def venues():
     #     }]
     # }]
 
-    return render_template('pages/venues.html', areas=localAreas)
+    return render_template('pages/venues.html', areas=places, venues=all_venues)
 
 
 @app.route('/venues/search', methods=['POST'])
