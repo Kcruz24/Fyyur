@@ -283,26 +283,26 @@ def create_venue_form():
 
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
-    # TODO: insert form data as a new Venue record in the db, instead
-    body = {}
+    # TODO: insert form data as a new Venue record in the db, instead (DONE)
     error = False
 
-    # print(request.form["name"])
-    # print(request.form["city"])
-    # print(request.form["looking_for_talent"])
-
     print(request.values)
+    print(request.args)
     try:
         req_name = request.form["name"]
         req_city = request.form["city"]
         req_state = request.form["state"]
         req_address = request.form["address"]
         req_phone = request.form["phone"]
-        req_genres = request.form["genres"]
+        req_genres = request.form.getlist("genres")
         req_facebook_link = request.form["facebook_link"]
         req_image_link = request.form["image_link"]
         req_website_link = request.form["website_link"]
-        req_seeking_talent = request.form["seeking_talent"]
+
+        req_seeking_talent = False
+        if request.form["seeking_talent"] == "y":
+            req_seeking_talent = True
+
         req_seeking_description = request.form["seeking_description"]
 
         new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
@@ -314,19 +314,6 @@ def create_venue_submission():
         db.session.commit()
 
         flash('Venue ' + request.form['name'] + ' was successfully listed!')
-
-        body["id"] = new_venue.id
-        body["name"] = new_venue.name
-        body["city"] = new_venue.city
-        body["state"] = new_venue.state
-        body["address"] = new_venue.address
-        body["phone"] = new_venue.phone
-        body["genres"] = new_venue.genres
-        body["facebook_link"] = new_venue.facebook_link
-        body["image_link"] = new_venue.image_link
-        body["website_link"] = new_venue.website_link
-        body["seeking_talent"] = new_venue.seeking_talent
-        body["seeking_description"] = new_venue.seeking_description
     except():
         db.session.rollback()
         flash('An error occurred. Venue could not be listed.')
@@ -340,11 +327,9 @@ def create_venue_submission():
     else:
         abort(500)
 
-    # TODO: modify data to be the data object returned from db insertion
-
+    # TODO: modify data to be the data object returned from db insertion (DONE)
     # on successful db insert, flash success
-
-    # TODO: on unsuccessful db insert, flash an error instead.
+    # TODO: on unsuccessful db insert, flash an error instead. (DONE)
     # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
     # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
     # return render_template('pages/home.html')
