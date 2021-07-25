@@ -14,7 +14,7 @@ import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from flask_migrate import Migrate
-from sqlalchemy import String
+from sqlalchemy import String, func
 
 from forms import *
 
@@ -40,7 +40,7 @@ show = db.Table("Show",
                 db.Column("id", db.Integer(), primary_key=True),
                 db.Column("venue_fk1", db.Integer(), db.ForeignKey('venue.id')),
                 db.Column("artist_fk2", db.Integer(), db.ForeignKey('artist.id')),
-                db.Column("start_time", db.String(), nullable=False)
+                db.Column("start_time", db.DateTime(timezone=True), nullable=False, default=func.now())
                 )
 
 
