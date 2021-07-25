@@ -4,18 +4,20 @@
     {% for area in areas %}
         <h3>{{ area.city }}, {{ area.state }}</h3>
         <ul class="items">
-        {% set index = 0 %}
-            {% for venue in areas[index].venues %}
+            {% set index = 0 %}
+            {% for venue in venues %}
                 <li>
+                    {% if area.city == venue.city and area.state == venue.state %}
                     <a href="/venues/{{ venue.id }}">
                         <i class="fas fa-music"></i>
                         <div class="item">
                             <h5>{{ venue.name }}</h5>
                         </div>
                     </a>
+                    {% endif %}
                 </li>
+                {% set index = index + 1 %}
             {% endfor %}
-        {% set index = index + 1 %}
         </ul>
     {% endfor %}
 {% endblock %}
