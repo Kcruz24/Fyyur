@@ -179,7 +179,8 @@ def search_venues():
 @app.route('/venues/<int:venue_id>')
 def show_venue(venue_id):
     # shows the venue page with the given venue_id
-    # TODO: replace with real venue data from the venues table, using venue_id (Partially DONE)
+    # TODO: replace with real venue data from the venues table, using venue_id
+    #       FALTA: Lo de past_shows, upcoming_shows, past_shows_count, y upcoming_shows_count (Partially DONE)
     data1 = {
         "id": 1,
         "name": "The Musical Hop",
