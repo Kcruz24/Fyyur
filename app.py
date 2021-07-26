@@ -563,14 +563,51 @@ def create_artist_form():
 @app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
     # called upon submitting the new artist listing form
-    # TODO: insert form data as a new Venue record in the db, instead
-    # TODO: modify data to be the data object returned from db insertion
+    # TODO: insert form data as a new Venue record in the db, instead (DONE)
+    # TODO: modify data to be the data object returned from db insertion (DONE)
+    error = False
 
+    print(request.values)
+    print(request.args)
+    try:
+        req_name = request.form["name"]
+        req_city = request.form["city"]
+        req_state = request.form["state"]
+        req_phone = request.form["phone"]
+        req_genres = request.form.getlist("genres")
+        req_facebook_link = request.form["facebook_link"]
+        req_image_link = request.form["image_link"]
+        req_website_link = request.form["website_link"]
+
+        req_seeking_venues = False
+        if request.form["seeking_venue"] == "y":
+            req_seeking_venues = True
+
+        req_seeking_description = request.form["seeking_description"]
+
+        new_artist = Artist(name=req_name, city=req_city, state=req_state, phone=req_phone,
+                            genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
+                            website_link=req_website_link, seeking_venues=req_seeking_venues,
+                            seeking_description=req_seeking_description)
+
+        db.session.add(new_artist)
+        db.session.commit()
+        flash('Artist ' + request.form['name'] + ' was successfully listed!')
+    except():
+        flash('Artist could not be listed :(')
+        db.session.rollback()
+        error = True
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    if not error:
+        return render_template('pages/home.html')
+    else:
+        abort(500)
     # on successful db insert, flash success
-    flash('Artist ' + request.form['name'] + ' was successfully listed!')
-    # TODO: on unsuccessful db insert, flash an error instead.
+    # TODO: on unsuccessful db insert, flash an error instead. (DONE)
     # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
-    return render_template('pages/home.html')
 
 
 #  Shows
