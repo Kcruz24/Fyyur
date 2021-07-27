@@ -56,7 +56,7 @@ class Venue(db.Model):
     facebook_link = db.Column(db.String(120), nullable=True, unique=True)
     image_link = db.Column(db.String(500), nullable=False, unique=True)
     website_link = db.Column(db.String(500), nullable=False, unique=True)
-    seeking_talent = db.Column(db.Boolean(), nullable=True)
+    seeking_talent = db.Column(db.Boolean(), nullable=True, default=False)
     seeking_description = db.Column(db.String(), nullable=True)
     artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
@@ -78,7 +78,7 @@ class Artist(db.Model):
     facebook_link = db.Column(db.String(120), nullable=True, unique=True)
     image_link = db.Column(db.String(500), nullable=False, unique=True)
     website_link = db.Column(db.String(500), nullable=True, unique=True)
-    seeking_venues = db.Column(db.Boolean(), nullable=True)
+    seeking_venues = db.Column(db.Boolean(), nullable=True, default=False)
     seeking_description = db.Column(db.String(), nullable=True)
 
     def __repr__(self):
@@ -339,7 +339,7 @@ def create_venue_submission():
 @app.route('/venues/<venue_id>/delete', methods=['DELETE'])
 def delete_venue(venue_id):
     # TODO: Complete this endpoint for taking a venue_id, and using
-    # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
+    #       SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail. (DONE)
     error = False
 
     try:
