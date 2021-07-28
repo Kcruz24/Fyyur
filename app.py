@@ -63,7 +63,7 @@ class Venue(db.Model):
     artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
     def __repr__(self):
-        return f"<Table id: {self.id}, name: {self.name}"
+        return f"Table id: {self.id}, name: {self.name}"
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
@@ -84,7 +84,10 @@ class Artist(db.Model):
     seeking_description = db.Column(db.String(), nullable=True)
 
     def __repr__(self):
-        print(f"<Table id: {self.id}, name: {self.name}")
+        return f"id: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, " \
+               f"phone: {self.phone}, genres: {self.genres}, facebook_link: {self.facebook_link}, " \
+               f"image_link: {self.image_link}, website_link: {self.website_link}, seeking_venues: {self.seeking_venues}, " \
+               f"seeking_description: {self.seeking_description}"
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
 
