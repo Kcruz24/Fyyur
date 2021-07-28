@@ -53,11 +53,10 @@ p.lead {
 	width: 100%;
 }
 .navbar.navbar-fixed-top {
-  background: none;
   box-shadow: none;
   border-bottom: none;
   padding-top: 10px;
-  background-color: white;
+  background: white none;
 }
 .navbar-nav .search {
   margin-top: 6px;
