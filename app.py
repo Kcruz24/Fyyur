@@ -512,22 +512,42 @@ def show_artist(artist_id):
 #  ----------------------------------------------------------------
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
-    form = ArtistForm()
+    form = ArtistForm(request.form)
+    # artist = {
+    #     "id": 4,
+    #     "name": "Guns N Petals",
+    #     "genres": ["Rock n Roll"],
+    #     "city": "San Francisco",
+    #     "state": "CA",
+    #     "phone": "326-123-5000",
+    #     "website": "https://www.gunsnpetalsband.com",
+    #     "facebook_link": "https://www.facebook.com/GunsNPetals",
+    #     "seeking_venue": True,
+    #     "seeking_description": "Looking for shows to perform at in the San Francisco Bay Area!",
+    #     "image_link": "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid"
+    #                   "=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80 "
+    # }
+
+    get_artist = Artist.query.get(artist_id)
+    print(f"Artist: {get_artist}")
+    print(f"Id: {get_artist.id}")
+    print(f"Form name: {get_artist.name}")
+    print(f"Website link: {get_artist.website_link}")
     artist = {
-        "id": 4,
-        "name": "Guns N Petals",
-        "genres": ["Rock n Roll"],
-        "city": "San Francisco",
-        "state": "CA",
-        "phone": "326-123-5000",
-        "website": "https://www.gunsnpetalsband.com",
-        "facebook_link": "https://www.facebook.com/GunsNPetals",
-        "seeking_venue": True,
-        "seeking_description": "Looking for shows to perform at in the San Francisco Bay Area!",
-        "image_link": "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid"
-                      "=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80 "
+        "id": get_artist.id,
+        "name": get_artist.name,
+        "genres": get_artist.genres,
+        "city": get_artist.city,
+        "state": get_artist.state,
+        "phone": get_artist.phone,
+        "website": get_artist.website_link,
+        "facebook_link": get_artist.facebook_link,
+        "seeking_venue": get_artist.seeking_venues,
+        "seeking_description": get_artist.seeking_description,
+        "image_link": get_artist.image_link
     }
-    # TODO: populate form with fields from artist with ID <artist_id>
+
+    # TODO: populate form with fields from artist with ID <artist_id> (DONE)
     return render_template('forms/edit_artist.html', form=form, artist=artist)
 
 
