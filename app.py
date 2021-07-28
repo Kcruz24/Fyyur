@@ -277,6 +277,8 @@ def show_venue(venue_id):
 
     data = Venue.query.get(venue_id)
 
+    print(f"Genres: {data.genres}")
+
     return render_template('pages/show_venue.html', venue=data)
 
 
@@ -294,24 +296,27 @@ def create_venue_submission():
     # TODO: insert form data as a new Venue record in the db, instead (DONE)
     error = False
 
+    form = VenueForm(request.form)
+
     print(request.values)
     print(request.args)
+    print("Form genres:", form.genres.data)
     try:
-        req_name = request.form["name"]
-        req_city = request.form["city"]
-        req_state = request.form["state"]
-        req_address = request.form["address"]
-        req_phone = request.form["phone"]
-        req_genres = request.form.getlist("genres")
-        req_facebook_link = request.form["facebook_link"]
-        req_image_link = request.form["image_link"]
-        req_website_link = request.form["website_link"]
+        req_name = form.name.data
+        req_city = form.city.data
+        req_state = form.state.data
+        req_address = form.address.data
+        req_phone = form.phone.data
+        req_genres = form.genres.data
+        req_facebook_link = form.facebook_link.data
+        req_image_link = form.image_link.data
+        req_website_link = form.website_link.data
 
         req_seeking_talent = False
-        if request.form["seeking_talent"] == "y":
+        if form.seeking_talent.data == "y":
             req_seeking_talent = True
 
-        req_seeking_description = request.form["seeking_description"]
+        req_seeking_description = form.seeking_description.data
 
         new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
                           genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
