@@ -44,6 +44,8 @@ show = db.Table("Show",
                 )
 
 
+# TODO: Set genres column in Artist and Venue to False, check psql
+
 class Venue(db.Model):
     __tablename__ = 'venue'
     id = db.Column(db.Integer(), primary_key=True)
