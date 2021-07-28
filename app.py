@@ -622,23 +622,25 @@ def create_artist_submission():
     # TODO: modify data to be the data object returned from db insertion (DONE)
     error = False
 
+    form = ArtistForm(request.form)
+
     print(request.values)
     print(request.args)
     try:
-        req_name = request.form["name"]
-        req_city = request.form["city"]
-        req_state = request.form["state"]
-        req_phone = request.form["phone"]
-        req_genres = request.form.getlist("genres")
-        req_facebook_link = request.form["facebook_link"]
-        req_image_link = request.form["image_link"]
-        req_website_link = request.form["website_link"]
+        req_name = form.name.data
+        req_city = form.city.data
+        req_state = form.state.data
+        req_phone = form.phone.data
+        req_genres = form.genres.data
+        req_facebook_link = form.facebook_link.data
+        req_image_link = form.image_link.data
+        req_website_link = form.website_link.data
 
         req_seeking_venues = False
-        if request.form["seeking_venue"] == "y":
+        if form.seeking_venue.data == "y":
             req_seeking_venues = True
 
-        req_seeking_description = request.form["seeking_description"]
+        req_seeking_description = form.seeking_description.data
 
         new_artist = Artist(name=req_name, city=req_city, state=req_state, phone=req_phone,
                             genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
@@ -647,7 +649,7 @@ def create_artist_submission():
 
         db.session.add(new_artist)
         db.session.commit()
-        flash('Artist ' + request.form['name'] + ' was successfully listed!')
+        flash('Artist ' + req_name + ' was successfully listed!')
     except():
         flash('Artist could not be listed :(')
         db.session.rollback()
