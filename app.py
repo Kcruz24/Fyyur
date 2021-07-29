@@ -63,7 +63,6 @@ class Venue(db.Model):
     website_link = db.Column(db.String(500), nullable=False, unique=True)
     seeking_talent = db.Column(db.Boolean(), nullable=True, default=False)
     seeking_description = db.Column(db.String(), nullable=True)
-    artist_fk = db.relationship('Artist', secondary=show, backref=db.backref("venue", lazy=True))
 
     def __repr__(self):
         return f"Table id: {self.id}, name: {self.name}"
