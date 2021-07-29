@@ -800,8 +800,21 @@ def create_shows():
 def create_show_submission():
     # called to create new shows in the db, upon submitting new show listing form
     # TODO: insert form data as a new Show record in the db, instead
-
     # on successful db insert, flash success
+    print(request.values)
+
+    error = False
+    form = ShowForm(request.form)
+
+    # try:
+    #     req_venue_id = form.venue_id.data
+    #     req_artist_id = form.artist_id.data
+    #     req_start_time = form.start_time.data
+    #
+    #     new_show = Show(venue_id=req_venue_id, artist_id=req_artist_id, start_time=req_start_time)
+
+
+
     flash('Show was successfully listed!')
     # TODO: on unsuccessful db insert, flash an error instead.
     # e.g., flash('An error occurred. Show could not be listed.')
