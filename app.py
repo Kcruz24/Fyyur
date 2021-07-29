@@ -737,6 +737,14 @@ def shows():
     # displays list of shows at /shows
     # TODO: replace with real venues data.
     #       num_shows should be aggregated based on number of upcoming shows per venue.
+
+    # Attempt to query from the associative show table
+    show_record = Venue.query.join(show).join(Artist).filter(
+        (show.c.venue_id == Venue.id) & (show.c.artist_id == Artist.id)
+    ).all()
+
+    print("Show record: ", show_record)
+
     data = [{
         "venue_id": 1,
         "venue_name": "The Musical Hop",
