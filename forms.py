@@ -221,6 +221,7 @@ class ArtistForm(Form):
             ('Punk', 'Punk'),
             ('R&B', 'R&B'),
             ('Reggae', 'Reggae'),
+            ('Reggaeton', 'Reggaeton'),
             ('Rock n Roll', 'Rock n Roll'),
             ('Soul', 'Soul'),
             ('Other', 'Other'),
