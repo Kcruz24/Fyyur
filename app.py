@@ -261,9 +261,6 @@ def create_venue_submission():
 
     form = VenueForm(request.form)
 
-    print(request.values)
-    print(request.args)
-    print("Form genres:", form.genres.data)
     try:
         req_name = form.name.data
         req_city = form.city.data
