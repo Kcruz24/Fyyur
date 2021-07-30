@@ -42,13 +42,11 @@ class Show(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     venue_fk1 = db.Column(db.Integer(), db.ForeignKey('venue.id'), nullable=False)
     artist_fk2 = db.Column(db.Integer(), db.ForeignKey('artist.id'), nullable=False)
-    start_time = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    start_time = db.Column(db.DateTime(), nullable=False)
 
     def __repr__(self):
         return f"id: {self.id}, venue_fk: {self.venue_fk1}, artist_fk: {self.artist_fk2}, start_time: {self.start_time}"
 
-
-# TODO: Set genres column in Artist and Venue to False, check psql
 
 class Venue(db.Model):
     __tablename__ = 'venue'
