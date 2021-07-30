@@ -169,16 +169,23 @@ def search_venues():
     all_venues = Venue.query.filter(Venue.name.ilike(f'%{search_term}%')).all()
     count = Venue.query.filter(Venue.name.ilike(f'%{search_term}%')).count()
 
-    # response = {
-    #     "count": 1,
-    #     "data": [{
-    #         "id": 2,
-    #         "name": "The Dueling Pianos Bar",
-    #         "num_upcoming_shows": 0,
-    #     }]
-    # }
+    data = []
 
-    return render_template('pages/search_venues.html', search_term=search_term, venues=all_venues, count=count)
+    for venue in all_venues:
+        data.append({
+            "id": venue.id,
+            "name": venue.name,
+            "num_upcoming_shows": Show.query.join(Venue).filter(
+                venue.id == Show.venue_fk1 and Show.start_time > datetime.now()
+            ).count()
+        })
+
+    response = {
+        "count": count,
+        "data": data
+    }
+
+    return render_template('pages/search_venues.html', search_term=search_term, venues=response)
 
 
 @app.route('/venues/<int:venue_id>')
