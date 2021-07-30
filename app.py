@@ -748,7 +748,7 @@ def shows():
             "artist_id": Artist.query.get(show.artist_fk2).id,
             "artist_name": Artist.query.get(show.artist_fk2).name,
             "artist_image_link": Artist.query.get(show.artist_fk2).image_link,
-            "start_time": show.start_time
+            "start_time": str(show.start_time)
         })
 
     return render_template('pages/shows.html', shows=data)
