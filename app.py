@@ -167,23 +167,30 @@ def search_venues():
 
     search_term = request.form.get('search_term')
     all_venues = Venue.query.filter(Venue.name.ilike(f'%{search_term}%')).all()
-    count = Venue.query.filter(Venue.name.ilike(f'%{search_term}%')).count()
-
     data = []
+    upcoming_shows = []
 
     for venue in all_venues:
+        get_artist_shows = Show.query.join(Venue).filter(venue.id == Show.venue_fk1).all()
+        for show in get_artist_shows:
+            if show.start_time > datetime.now():
+                upcoming_shows.append(show)
+
         data.append({
             "id": venue.id,
             "name": venue.name,
-            "num_upcoming_shows": Show.query.join(Venue).filter(
-                venue.id == Show.venue_fk1 and Show.start_time > datetime.now()
-            ).count()
+            "num_upcoming_shows": len(upcoming_shows)
         })
 
+        upcoming_shows.clear()
+
+    count = Venue.query.filter(Venue.name.ilike(f'%{search_term}%')).count()
     response = {
         "count": count,
         "data": data
     }
+
+    print(data)
 
     return render_template('pages/search_venues.html', search_term=search_term, venues=response)
 
