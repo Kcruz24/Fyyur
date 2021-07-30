@@ -15,6 +15,7 @@ from logging import Formatter, FileHandler
 from flask_wtf import Form
 from flask_migrate import Migrate
 from sqlalchemy import String, func
+from datetime import datetime
 
 from forms import *
 
