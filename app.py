@@ -368,17 +368,32 @@ def search_artists():
 
     search_term = request.form.get('search_term')
     all_artists = Artist.query.filter(Artist.name.ilike(f'%{search_term}%')).all()
-    count = Artist.query.filter(Artist.name.ilike(f'%{search_term}%')).count()
+    upcoming_shows = []
+    data = []
 
-    # response = {
-    #     "count": 1,
-    #     "data": [{
-    #         "id": 4,
-    #         "name": "Guns N Petals",
-    #         "num_upcoming_shows": 0,
-    #     }]
-    # }
-    return render_template('pages/search_artists.html', artists=all_artists, count=count,
+    for artist in all_artists:
+        get_artist_shows = Show.query.join(Artist).filter(artist.id == Show.artist_fk2).all()
+        for show in get_artist_shows:
+            if show.start_time > datetime.now():
+                upcoming_shows.append(show)
+
+        data.append({
+            "id": artist.id,
+            "name": artist.name,
+            "num_upcoming_shows": len(upcoming_shows)
+        })
+
+        upcoming_shows.clear()
+
+    count = Artist.query.filter(Artist.name.ilike(f'%{search_term}%')).count()
+    response = {
+        "count": count,
+        "data": data
+    }
+
+    print(data)
+
+    return render_template('pages/search_artists.html', artists=response,
                            search_term=search_term)
 
 
