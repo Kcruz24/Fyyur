@@ -658,7 +658,7 @@ def create_show_submission():
 
 
 @app.errorhandler(404)
-def not_found_error(error):
+def not_found_error():
     return render_template('errors/404.html'), 404
 
 
