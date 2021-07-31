@@ -82,21 +82,16 @@
         </div>
     </section>
 
-    <div class="row">
-        <a href="/venues/{{ venue.id }}/edit">
-            <button class="btn btn-primary btn-lg col-md-2 mr-5">Edit</button>
-        </a>
 
-        <form action="/">
-            <button id="deleteVenue" class="btn btn-danger btn-lg col-md-2 ml-5" data-id="{{ venue.id }}">Delete</button>
-        </form>
-    </div>
+    <a href="/venues/{{ venue.id }}/edit">
+        <button class="btn btn-primary btn-lg mr-5">Edit</button>
+    </a>
 
-
+    <button class="btn btn-danger btn-lg ml-5 delete-venue" data-id="{{ venue.id }}">Delete</button>
 
 
     <script>
-        const deleteBtn = document.querySelector("#deleteVenue")
+        const deleteBtn = document.querySelector(".delete-venue")
 
         deleteBtn.onclick = function (e) {
             console.log("event", e)

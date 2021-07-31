@@ -318,9 +318,9 @@ def delete_venue(venue_id):
 
     try:
         venue_to_delete = Venue.query.get(venue_id)
-        flash("Successfully deleted " + venue_to_delete.name + ".")
         db.session.delete(venue_to_delete)
         db.session.commit()
+        flash("Successfully deleted " + venue_to_delete.name + ".")
     except():
         db.session.rollback()
         flash("Could not delete " + Venue.query.get(venue_id).name + ".")
