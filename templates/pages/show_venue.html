@@ -98,8 +98,16 @@
 
             const venueId = e.target.dataset["id"]
 
+            console.log("Venue id", venueId)
+
             fetch("/venues/" + venueId + "/delete", {
                 method: "DELETE"
+            })
+            .then(function () {
+                window.location.href = '/venues';
+            })
+            .catch(function (e) {
+                console.log('error', e)
             })
         }
     </script>
