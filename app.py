@@ -19,7 +19,6 @@ from datetime import datetime
 from sqlalchemy.orm import backref
 
 from forms import *
-from models import Artist, Venue, Show
 
 # ----------------------------------------------------------------------------#
 # App Config.
