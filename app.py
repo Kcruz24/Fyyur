@@ -403,9 +403,8 @@ def show_artist(artist_id):
     past_shows = []
     past_shows_info = []
     get_artist = Artist.query.get(artist_id)
-    get_shows = Show.query.filter(Show.artist_fk2 == artist_id).all()
 
-    for show in get_shows:
+    for show in get_artist.shows:
         if show.start_time > datetime.now():
             upcoming_shows.append(show)
         else:
