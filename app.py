@@ -564,6 +564,34 @@ def create_artist_submission():
     # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
 
 
+@app.route('/artists/<artist_id>/delete', methods=['DELETE'])
+def delete_artist(artist_id):
+    # TODO: Complete this endpoint for taking a venue_id, and using
+    #       SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail. (DONE)
+    error = False
+
+    try:
+        artist_to_delete = Artist.query.get(artist_id)
+        db.session.delete(artist_to_delete)
+        db.session.commit()
+        flash("Successfully deleted " + artist_to_delete.name + ".")
+    except():
+        db.session.rollback()
+        flash("Could not delete " + Artist.query.get(artist_id).name + ".")
+        error = True
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    # TODO: BONUS CHALLENGE: Implement a button to delete a Venue on a Venue Page, have it so that
+    #       clicking that button delete it from the db then redirect the user to the homepage (DONE)
+
+    if not error:
+        return redirect(url_for("index"))
+    else:
+        abort(500)
+
+
 #  Shows
 #  ----------------------------------------------------------------
 
