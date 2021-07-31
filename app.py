@@ -2,23 +2,17 @@
 # Imports
 # ----------------------------------------------------------------------------#
 
-import json
-import sys
-
-import dateutil.parser
-import babel
-from flask import Flask, render_template, request, Response, flash, redirect, url_for, jsonify, abort
-from flask_moment import Moment
-from flask_sqlalchemy import SQLAlchemy
 import logging
+import sys
 from logging import Formatter, FileHandler
-from flask_wtf import FlaskForm
-from flask_migrate import Migrate
-from sqlalchemy import String, func
-from datetime import datetime
-from sqlalchemy.orm import backref
-from models import Artist, Venue, Show, db, app
+
+import babel
+import dateutil.parser
+from flask import render_template, request, flash, redirect, url_for, abort
+from flask_moment import Moment
+
 from forms import *
+from models import Artist, Venue, Show, db, app
 
 # ----------------------------------------------------------------------------#
 # App Config.
@@ -243,7 +237,6 @@ def create_venue_submission():
     # TODO: on unsuccessful db insert, flash an error instead. (DONE)
     # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
     # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
-    # return render_template('pages/home.html')
 
 
 @app.route('/venues/<venue_id>/delete', methods=['DELETE'])
@@ -670,7 +663,7 @@ def not_found_error(error):
 
 
 @app.errorhandler(500)
-def server_error(error):
+def server_error():
     return render_template('errors/500.html'), 500
 
 
