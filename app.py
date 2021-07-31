@@ -208,9 +208,7 @@ def show_venue(venue_id):
     past_shows_info = []
     upcoming_shows_info = []
 
-    get_shows = Show.query.filter(Show.venue_fk1 == venue_id).all()
-
-    for show in get_shows:
+    for show in get_venue.shows:
         if show.start_time > datetime.now():
             upcoming_shows.append(show)
         else:
