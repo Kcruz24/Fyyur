@@ -278,11 +278,7 @@ def create_venue_submission():
         req_facebook_link = form.facebook_link.data
         req_image_link = form.image_link.data
         req_website_link = form.website_link.data
-
-        req_seeking_talent = False
-        if form.seeking_talent.data == "y":
-            req_seeking_talent = True
-
+        req_seeking_talent = form.seeking_talent.data
         req_seeking_description = form.seeking_description.data
 
         new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
