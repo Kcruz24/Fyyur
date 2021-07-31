@@ -198,38 +198,40 @@ def create_venue_form():
 def create_venue_submission():
     # TODO: insert form data as a new Venue record in the db, instead (DONE)
     error = False
-
     form = VenueForm(request.form)
 
-    try:
-        req_name = form.name.data
-        req_city = form.city.data
-        req_state = form.state.data
-        req_address = form.address.data
-        req_phone = form.phone.data
-        req_genres = form.genres.data
-        req_facebook_link = form.facebook_link.data
-        req_image_link = form.image_link.data
-        req_website_link = form.website_link.data
-        req_seeking_talent = form.seeking_talent.data
-        req_seeking_description = form.seeking_description.data
+    if form.validate_on_submit():
+        try:
+            req_name = form.name.data
+            req_city = form.city.data
+            req_state = form.state.data
+            req_address = form.address.data
+            req_phone = form.phone.data
+            req_genres = form.genres.data
+            req_facebook_link = form.facebook_link.data
+            req_image_link = form.image_link.data
+            req_website_link = form.website_link.data
+            req_seeking_talent = form.seeking_talent.data
+            req_seeking_description = form.seeking_description.data
 
-        new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
-                          genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
-                          website_link=req_website_link, seeking_talent=req_seeking_talent,
-                          seeking_description=req_seeking_description)
+            new_venue = Venue(name=req_name, city=req_city, state=req_state, address=req_address, phone=req_phone,
+                              genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
+                              website_link=req_website_link, seeking_talent=req_seeking_talent,
+                              seeking_description=req_seeking_description)
 
-        db.session.add(new_venue)
-        db.session.commit()
+            db.session.add(new_venue)
+            db.session.commit()
 
-        flash('Venue ' + request.form['name'] + ' was successfully listed!')
-    except():
-        db.session.rollback()
-        flash('An error occurred. Venue could not be listed.')
-        error = True
-        print(sys.exc_info())
-    finally:
-        db.session.close()
+            flash(f'Venue {form.name.data} was successfully listed!')
+        except():
+            db.session.rollback()
+            flash('An error occurred. Venue could not be listed.')
+            error = True
+            print(sys.exc_info())
+        finally:
+            db.session.close()
+    else:
+        flash(f'Venue {form.name.data} could not be listed due to validation error!')
 
     if not error:
         return render_template('pages/home.html')
