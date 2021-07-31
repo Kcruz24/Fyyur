@@ -72,7 +72,32 @@
 	</div>
 </section>
 
-<a href="/artists/{{ artist.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a>
+    <a href="/artists/{{ artist.id }}/edit">
+        <button class="btn btn-primary btn-lg">Edit</button>
+    </a>
 
+    <button class="btn btn-danger btn-lg ml-5 delete-venue" data-id="{{ artist.id }}">Delete</button>
+
+    <script>
+        const deleteBtn = document.querySelector(".delete-venue")
+
+        deleteBtn.onclick = function (e) {
+            console.log("event", e)
+
+            const artistId = e.target.dataset["id"]
+
+            console.log("Artist id", artistId)
+
+            fetch("/artists/" + artistId + "/delete", {
+                method: "DELETE"
+            })
+            .then(function () {
+                window.location.href = '/artists';
+            })
+            .catch(function (e) {
+                console.log('error', e)
+            })
+        }
+    </script>
 {% endblock %}
 
