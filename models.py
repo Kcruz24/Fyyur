@@ -31,7 +31,7 @@ class Venue(db.Model):
     address = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(120), nullable=False)
     genres = db.Column(db.ARRAY(String), nullable=False)
-    facebook_link = db.Column(db.String(120), nullable=True)
+    facebook_link = db.Column(db.String(120), nullable=False)
     image_link = db.Column(db.String(500), nullable=False)
     website_link = db.Column(db.String(500), nullable=False)
     seeking_talent = db.Column(db.Boolean(), nullable=True, default=False)
