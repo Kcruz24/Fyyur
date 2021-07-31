@@ -419,7 +419,7 @@ def show_artist(artist_id):
         })
 
     for upcoming_show in upcoming_shows:
-        past_shows_info.append({
+        upcoming_shows_info.append({
             "venue_id": Venue.query.get(upcoming_show.venue_fk1).id,
             "venue_name": Venue.query.get(upcoming_show.venue_fk1).name,
             "venue_image_link": Venue.query.get(upcoming_show.venue_fk1).image_link,
