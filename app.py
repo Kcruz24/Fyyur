@@ -17,7 +17,7 @@ from flask_migrate import Migrate
 from sqlalchemy import String, func
 from datetime import datetime
 from sqlalchemy.orm import backref
-
+# from models import Artist, Venue, Show
 from forms import *
 
 # ----------------------------------------------------------------------------#
