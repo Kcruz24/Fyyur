@@ -6,3 +6,5 @@ flask_sqlalchemy==2.4.4
 
 Flask~=2.0.1
 WTForms~=2.3.3
+SQLAlchemy~=1.4.22
+alembic~=1.6.5
