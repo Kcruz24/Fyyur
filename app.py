@@ -602,27 +602,29 @@ def create_show_submission():
     # called to create new shows in the db, upon submitting new show listing form
     # TODO: insert form data as a new Show record in the db, instead (DONE)
     # on successful db insert, flash success
-    print(request.values)
 
     error = False
     form = ShowForm(request.form)
 
-    try:
-        req_venue_id = form.venue_id.data
-        req_artist_id = form.artist_id.data
-        req_start_time = form.start_time.data
+    if form.validate_on_submit():
+        try:
+            req_venue_id = form.venue_id.data
+            req_artist_id = form.artist_id.data
+            req_start_time = form.start_time.data
 
-        new_show = Show(venue_fk1=req_venue_id, artist_fk2=req_artist_id, start_time=req_start_time)
-        db.session.add(new_show)
-        db.session.commit()
-        flash('Show was successfully listed!')
-    except():
-        db.session.rollback()
-        error = True
-        print(sys.exc_info())
-        flash("Something went wrong when trying to list a show! :(")
-    finally:
-        db.session.close()
+            new_show = Show(venue_fk1=req_venue_id, artist_fk2=req_artist_id, start_time=req_start_time)
+            db.session.add(new_show)
+            db.session.commit()
+            flash('Show was successfully listed!')
+        except():
+            db.session.rollback()
+            error = True
+            print(sys.exc_info())
+            flash("Something went wrong when trying to list a show! :(")
+        finally:
+            db.session.close()
+    else:
+        flash("Show could not be created due to validation error!")
 
     if not error:
         return render_template('pages/home.html')
