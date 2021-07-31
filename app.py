@@ -16,8 +16,10 @@ from flask_wtf import Form
 from flask_migrate import Migrate
 from sqlalchemy import String, func
 from datetime import datetime
+from sqlalchemy.orm import backref
 
 from forms import *
+from models import Artist, Venue, Show
 
 # ----------------------------------------------------------------------------#
 # App Config.
