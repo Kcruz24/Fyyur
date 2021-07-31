@@ -601,11 +601,7 @@ def create_artist_submission():
         req_facebook_link = form.facebook_link.data
         req_image_link = form.image_link.data
         req_website_link = form.website_link.data
-
-        req_seeking_venues = False
-        if form.seeking_venue.data == "y":
-            req_seeking_venues = True
-
+        req_seeking_venues = form.seeking_venue.data
         req_seeking_description = form.seeking_description.data
 
         new_artist = Artist(name=req_name, city=req_city, state=req_state, phone=req_phone,
