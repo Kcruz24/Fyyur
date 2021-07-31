@@ -524,35 +524,36 @@ def create_artist_submission():
 
     form = ArtistForm(request.form)
 
-    print(request.values)
-    print(request.args)
-    try:
-        req_name = form.name.data
-        req_city = form.city.data
-        req_state = form.state.data
-        req_phone = form.phone.data
-        req_genres = form.genres.data
-        req_facebook_link = form.facebook_link.data
-        req_image_link = form.image_link.data
-        req_website_link = form.website_link.data
-        req_seeking_venues = form.seeking_venue.data
-        req_seeking_description = form.seeking_description.data
+    if form.validate_on_submit():
+        try:
+            req_name = form.name.data
+            req_city = form.city.data
+            req_state = form.state.data
+            req_phone = form.phone.data
+            req_genres = form.genres.data
+            req_facebook_link = form.facebook_link.data
+            req_image_link = form.image_link.data
+            req_website_link = form.website_link.data
+            req_seeking_venues = form.seeking_venue.data
+            req_seeking_description = form.seeking_description.data
 
-        new_artist = Artist(name=req_name, city=req_city, state=req_state, phone=req_phone,
-                            genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
-                            website_link=req_website_link, seeking_venues=req_seeking_venues,
-                            seeking_description=req_seeking_description)
+            new_artist = Artist(name=req_name, city=req_city, state=req_state, phone=req_phone,
+                                genres=req_genres, facebook_link=req_facebook_link, image_link=req_image_link,
+                                website_link=req_website_link, seeking_venues=req_seeking_venues,
+                                seeking_description=req_seeking_description)
 
-        db.session.add(new_artist)
-        db.session.commit()
-        flash('Artist ' + req_name + ' was successfully listed!')
-    except():
-        flash('Artist could not be listed :(')
-        db.session.rollback()
-        error = True
-        print(sys.exc_info())
-    finally:
-        db.session.close()
+            db.session.add(new_artist)
+            db.session.commit()
+            flash('Artist ' + req_name + ' was successfully listed!')
+        except():
+            flash('Artist could not be listed :(')
+            db.session.rollback()
+            error = True
+            print(sys.exc_info())
+        finally:
+            db.session.close()
+    else:
+        flash(f"Artist {form.name.data} could not be listed due to validation error!")
 
     if not error:
         return render_template('pages/home.html')
