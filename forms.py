@@ -1,4 +1,4 @@
-from locals import states, genres_choices
+from locals import state_choices, genres_choices
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, URL, Regexp, Optional
@@ -32,7 +32,7 @@ class VenueForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=states
+        choices=state_choices
     )
     address = StringField(
         'address', validators=[DataRequired()]
@@ -72,7 +72,7 @@ class ArtistForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=states
+        choices=state_choices
     )
     phone = StringField(
         # TODO implement validation logic for phone (DONE)

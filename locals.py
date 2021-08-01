@@ -1,4 +1,4 @@
-states = [
+state_choices = [
     ('AL', 'AL'),
     ('AK', 'AK'),
     ('AZ', 'AZ'),
