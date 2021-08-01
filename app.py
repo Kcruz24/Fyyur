@@ -415,23 +415,7 @@ def edit_artist_submission(artist_id):
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
     venue = Venue.query.get_or_404(venue_id)
-
-    get_venue = Venue.query.get(venue_id)
-
-    venue = {
-        "id": get_venue.id,
-        "name": get_venue.name,
-        "genres": get_venue.genres,
-        "address": get_venue.address,
-        "city": get_venue.city,
-        "state": get_venue.state,
-        "phone": get_venue.phone,
-        "website": get_venue.website_link,
-        "facebook_link": get_venue.facebook_link,
-        "seeking_talent": get_venue.seeking_talent,
-        "seeking_description": get_venue.seeking_description,
-        "image_link": get_venue.image_link
-    }
+    form = VenueForm(obj=venue)
 
     # TODO: populate form with values from venue with ID <venue_id> (DONE)
     return render_template('forms/edit_venue.html', form=form, venue=venue)
