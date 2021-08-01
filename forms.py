@@ -1,3 +1,4 @@
+from locals import states, genres_choices
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, URL, Regexp, Optional
@@ -31,60 +32,7 @@ class VenueForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=[
-            ('AL', 'AL'),
-            ('AK', 'AK'),
-            ('AZ', 'AZ'),
-            ('AR', 'AR'),
-            ('CA', 'CA'),
-            ('CO', 'CO'),
-            ('CT', 'CT'),
-            ('DE', 'DE'),
-            ('DC', 'DC'),
-            ('FL', 'FL'),
-            ('GA', 'GA'),
-            ('HI', 'HI'),
-            ('ID', 'ID'),
-            ('IL', 'IL'),
-            ('IN', 'IN'),
-            ('IA', 'IA'),
-            ('KS', 'KS'),
-            ('KY', 'KY'),
-            ('LA', 'LA'),
-            ('ME', 'ME'),
-            ('MT', 'MT'),
-            ('NE', 'NE'),
-            ('NV', 'NV'),
-            ('NH', 'NH'),
-            ('NJ', 'NJ'),
-            ('NM', 'NM'),
-            ('NY', 'NY'),
-            ('NC', 'NC'),
-            ('ND', 'ND'),
-            ('OH', 'OH'),
-            ('OK', 'OK'),
-            ('OR', 'OR'),
-            ('MD', 'MD'),
-            ('MA', 'MA'),
-            ('MI', 'MI'),
-            ('MN', 'MN'),
-            ('MS', 'MS'),
-            ('MO', 'MO'),
-            ('PA', 'PA'),
-            ('PR', 'PR'),
-            ('RI', 'RI'),
-            ('SC', 'SC'),
-            ('SD', 'SD'),
-            ('TN', 'TN'),
-            ('TX', 'TX'),
-            ('UT', 'UT'),
-            ('VT', 'VT'),
-            ('VA', 'VA'),
-            ('WA', 'WA'),
-            ('WV', 'WV'),
-            ('WI', 'WI'),
-            ('WY', 'WY'),
-        ]
+        choices=states
     )
     address = StringField(
         'address', validators=[DataRequired()]
@@ -99,28 +47,7 @@ class VenueForm(FlaskForm):
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],
-        choices=[
-            ('Alternative', 'Alternative'),
-            ('Blues', 'Blues'),
-            ('Classical', 'Classical'),
-            ('Country', 'Country'),
-            ('Electronic', 'Electronic'),
-            ('Folk', 'Folk'),
-            ('Funk', 'Funk'),
-            ('Hip-Hop', 'Hip-Hop'),
-            ('Heavy Metal', 'Heavy Metal'),
-            ('Instrumental', 'Instrumental'),
-            ('Jazz', 'Jazz'),
-            ('Musical Theatre', 'Musical Theatre'),
-            ('Pop', 'Pop'),
-            ('Punk', 'Punk'),
-            ('R&B', 'R&B'),
-            ('Reggae', 'Reggae'),
-            ('Reggaeton', 'Reggaeton'),
-            ('Rock n Roll', 'Rock n Roll'),
-            ('Soul', 'Soul'),
-            ('Other', 'Other'),
-        ]
+        choices=genres_choices
     )
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
@@ -145,60 +72,7 @@ class ArtistForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=[
-            ('AL', 'AL'),
-            ('AK', 'AK'),
-            ('AZ', 'AZ'),
-            ('AR', 'AR'),
-            ('CA', 'CA'),
-            ('CO', 'CO'),
-            ('CT', 'CT'),
-            ('DE', 'DE'),
-            ('DC', 'DC'),
-            ('FL', 'FL'),
-            ('GA', 'GA'),
-            ('HI', 'HI'),
-            ('ID', 'ID'),
-            ('IL', 'IL'),
-            ('IN', 'IN'),
-            ('IA', 'IA'),
-            ('KS', 'KS'),
-            ('KY', 'KY'),
-            ('LA', 'LA'),
-            ('ME', 'ME'),
-            ('MT', 'MT'),
-            ('NE', 'NE'),
-            ('NV', 'NV'),
-            ('NH', 'NH'),
-            ('NJ', 'NJ'),
-            ('NM', 'NM'),
-            ('NY', 'NY'),
-            ('NC', 'NC'),
-            ('ND', 'ND'),
-            ('OH', 'OH'),
-            ('OK', 'OK'),
-            ('OR', 'OR'),
-            ('MD', 'MD'),
-            ('MA', 'MA'),
-            ('MI', 'MI'),
-            ('MN', 'MN'),
-            ('MS', 'MS'),
-            ('MO', 'MO'),
-            ('PA', 'PA'),
-            ('PR', 'PR'),
-            ('RI', 'RI'),
-            ('SC', 'SC'),
-            ('SD', 'SD'),
-            ('TN', 'TN'),
-            ('TX', 'TX'),
-            ('UT', 'UT'),
-            ('VT', 'VT'),
-            ('VA', 'VA'),
-            ('WA', 'WA'),
-            ('WV', 'WV'),
-            ('WI', 'WI'),
-            ('WY', 'WY'),
-        ]
+        choices=states
     )
     phone = StringField(
         # TODO implement validation logic for phone (DONE)
@@ -211,28 +85,7 @@ class ArtistForm(FlaskForm):
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],
-        choices=[
-            ('Alternative', 'Alternative'),
-            ('Blues', 'Blues'),
-            ('Classical', 'Classical'),
-            ('Country', 'Country'),
-            ('Electronic', 'Electronic'),
-            ('Folk', 'Folk'),
-            ('Funk', 'Funk'),
-            ('Hip-Hop', 'Hip-Hop'),
-            ('Heavy Metal', 'Heavy Metal'),
-            ('Instrumental', 'Instrumental'),
-            ('Jazz', 'Jazz'),
-            ('Musical Theatre', 'Musical Theatre'),
-            ('Pop', 'Pop'),
-            ('Punk', 'Punk'),
-            ('R&B', 'R&B'),
-            ('Reggae', 'Reggae'),
-            ('Reggaeton', 'Reggaeton'),
-            ('Rock n Roll', 'Rock n Roll'),
-            ('Soul', 'Soul'),
-            ('Other', 'Other'),
-        ]
+        choices=genres_choices
     )
     facebook_link = StringField(
         'facebook_link', validators=[URL(), Optional()]
