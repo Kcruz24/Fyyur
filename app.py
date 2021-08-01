@@ -60,10 +60,9 @@ def venues():
                     "name": venue.name,
                     "city": venue.city,
                     "state": venue.state,
-                    "num_upcoming_shows": Show.query.join(Venue).filter(
-                        venue.id == Show.venue_fk1 and
-                        Show.start_time > datetime.now()
-                    ).count()
+                    "num_upcoming_shows":
+                    len([show for show in venue.shows
+                         if show.start_time > datetime.now()])
                 })
 
         data.append({
