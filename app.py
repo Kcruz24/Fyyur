@@ -61,14 +61,13 @@ def venues():
                     "city": venue.city,
                     "state": venue.state,
                     "num_upcoming_shows":
-                    len([show for show in venue.shows
-                         if show.start_time > datetime.now()])
+                        len([show for show in venue.shows
+                             if show.start_time > datetime.now()])
                 })
 
         data.append({
             "city": place.city,
-            "state": place.state,
-            "venues": show_venues
+            "state": place.state
         })
 
     print("venues", show_venues)
@@ -684,12 +683,12 @@ def create_show_submission():
 
 
 @app.errorhandler(404)
-def not_found_error():
+def not_found_error(error):
     return render_template('errors/404.html'), 404
 
 
 @app.errorhandler(500)
-def server_error():
+def server_error(error):
     return render_template('errors/500.html'), 500
 
 
