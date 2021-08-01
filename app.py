@@ -205,9 +205,10 @@ def create_venue_submission():
         finally:
             db.session.close()
     else:
-        flash(
-            f'Venue {form.name.data} could not be listed due '
-            f'to validation error!')
+        message = []
+        for field, err in form.errors.items():
+            message.append(field + " " + "|".join(err))
+        flash(f"Errors: {message}")
 
     if not error:
         return render_template('pages/home.html')
