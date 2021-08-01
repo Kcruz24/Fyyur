@@ -190,29 +190,8 @@ def create_venue_submission():
 
     if form.validate_on_submit():
         try:
-            req_name = form.name.data
-            req_city = form.city.data
-            req_state = form.state.data
-            req_address = form.address.data
-            req_phone = form.phone.data
-            req_genres = form.genres.data
-            req_facebook_link = form.facebook_link.data
-            req_image_link = form.image_link.data
-            req_website_link = form.website_link.data
-            req_seeking_talent = form.seeking_talent.data
-            req_seeking_description = form.seeking_description.data
-
-            new_venue = Venue(name=req_name,
-                              city=req_city,
-                              state=req_state,
-                              address=req_address,
-                              phone=req_phone,
-                              genres=req_genres,
-                              facebook_link=req_facebook_link,
-                              image_link=req_image_link,
-                              website_link=req_website_link,
-                              seeking_talent=req_seeking_talent,
-                              seeking_description=req_seeking_description)
+            new_venue = Venue()
+            form.populate_obj(new_venue)
 
             db.session.add(new_venue)
             db.session.commit()
