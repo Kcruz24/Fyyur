@@ -20,18 +20,19 @@ migrate = Migrate(app, db)
 # Models.
 # ----------------------------------------------------------------------------#
 class Show(db.Model):
+    __tablename__ = 'show'
     id = db.Column(db.Integer(), primary_key=True)
-    venue_fk1 = db.Column(db.Integer(), db.ForeignKey('venue.id'),
+    venue_id = db.Column(db.Integer(), db.ForeignKey('venue.id'),
+                         nullable=False)
+    artist_id = db.Column(db.Integer(), db.ForeignKey('artist.id'),
                           nullable=False)
-    artist_fk2 = db.Column(db.Integer(), db.ForeignKey('artist.id'),
-                           nullable=False)
     start_time = db.Column(db.DateTime(),
                            nullable=False)
 
     def __repr__(self):
         return f"id: {self.id}, " \
-               f"venue_fk: {self.venue_fk1}, " \
-               f"artist_fk: {self.artist_fk2}, " \
+               f"venue_fk: {self.venue_id}, " \
+               f"artist_fk: {self.artist_id}, " \
                f"start_time: {self.start_time}"
 
 
@@ -71,7 +72,6 @@ class Venue(db.Model):
 
 class Artist(db.Model):
     __tablename__ = 'artist'
-
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
     city = db.Column(db.String(120), nullable=False)

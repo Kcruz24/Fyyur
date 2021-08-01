@@ -134,20 +134,20 @@ def show_venue(venue_id):
 
     for past_show in past_shows:
         past_shows_info.append({
-            "artist_id": Artist.query.get_or_404(past_show.artist_fk2).id,
-            "artist_name": Artist.query.get_or_404(past_show.artist_fk2).name,
+            "artist_id": Artist.query.get_or_404(past_show.artist_id).id,
+            "artist_name": Artist.query.get_or_404(past_show.artist_id).name,
             "artist_image_link": Artist.query.get_or_404(
-                past_show.artist_fk2).image_link,
+                past_show.artist_id).image_link,
             "start_time": str(past_show.start_time)
         })
 
     for upcoming_show in upcoming_shows:
         upcoming_shows_info.append({
-            "artist_id": Artist.query.get_or_404(upcoming_show.artist_fk2).id,
+            "artist_id": Artist.query.get_or_404(upcoming_show.artist_id).id,
             "artist_name": Artist.query.get_or_404(
-                upcoming_show.artist_fk2).name,
+                upcoming_show.artist_id).name,
             "artist_image_link": Artist.query.get_or_404(
-                upcoming_show.artist_fk2).image_link,
+                upcoming_show.artist_id).image_link,
             "start_time": str(upcoming_show.start_time)
         })
 
@@ -329,19 +329,19 @@ def show_artist(artist_id):
 
     for past_show in past_shows:
         past_shows_info.append({
-            "venue_id": Venue.query.get_or_404(past_show.venue_fk1).id,
-            "venue_name": Venue.query.get_or_404(past_show.venue_fk1).name,
+            "venue_id": Venue.query.get_or_404(past_show.venue_id).id,
+            "venue_name": Venue.query.get_or_404(past_show.venue_id).name,
             "venue_image_link": Venue.query.get_or_404(
-                past_show.venue_fk1).image_link,
+                past_show.venue_id).image_link,
             "start_time": str(past_show.start_time)
         })
 
     for upcoming_show in upcoming_shows:
         upcoming_shows_info.append({
-            "venue_id": Venue.query.get_or_404(upcoming_show.venue_fk1).id,
-            "venue_name": Venue.query.get_or_404(upcoming_show.venue_fk1).name,
+            "venue_id": Venue.query.get_or_404(upcoming_show.venue_id).id,
+            "venue_name": Venue.query.get_or_404(upcoming_show.venue_id).name,
             "venue_image_link": Venue.query.get_or_404(
-                upcoming_show.venue_fk1).image_link,
+                upcoming_show.venue_id).image_link,
             "start_time": str(upcoming_show.start_time)
         })
 
@@ -556,12 +556,12 @@ def shows():
 
     for show in all_shows:
         data.append({
-            "venue_id": Venue.query.get_or_404(show.venue_fk1).id,
-            "venue_name": Venue.query.get_or_404(show.venue_fk1).name,
-            "artist_id": Artist.query.get_or_404(show.artist_fk2).id,
-            "artist_name": Artist.query.get_or_404(show.artist_fk2).name,
+            "venue_id": Venue.query.get_or_404(show.venue_id).id,
+            "venue_name": Venue.query.get_or_404(show.venue_id).name,
+            "artist_id": Artist.query.get_or_404(show.artist_id).id,
+            "artist_name": Artist.query.get_or_404(show.artist_id).name,
             "artist_image_link": Artist.query.get_or_404(
-                show.artist_fk2).image_link,
+                show.artist_id).image_link,
             "start_time": str(show.start_time)
         })
 
