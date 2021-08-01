@@ -354,7 +354,7 @@ def show_artist(artist_id):
         "phone": get_artist.phone,
         "website": get_artist.website_link,
         "facebook_link": get_artist.facebook_link,
-        "seeking_venue": get_artist.seeking_venues,
+        "seeking_venue": get_artist.seeking_venue,
         "seeking_description": get_artist.seeking_description,
         "image_link": get_artist.image_link,
         "past_shows": past_shows_info,
