@@ -2,26 +2,15 @@
 # Imports
 # ----------------------------------------------------------------------------#
 
-import logging
 import sys
 import babel
+import logging
 import dateutil.parser
-from logging import Formatter, FileHandler
-from flask import render_template, request, flash, redirect, url_for, abort
-from flask_moment import Moment
+
 from forms import *
+from logging import Formatter, FileHandler
 from models import Artist, Venue, Show, db, app
-
-# ----------------------------------------------------------------------------#
-# App Config.
-# ----------------------------------------------------------------------------#
-
-moment = Moment(app)
-app.config.from_object('config')
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-
-# TODO: connect to a local postgresql database (DONE)
+from flask import render_template, request, flash, redirect, url_for, abort
 
 
 # ----------------------------------------------------------------------------#
