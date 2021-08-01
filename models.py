@@ -14,12 +14,18 @@ migrate = Migrate(app, db)
 # ----------------------------------------------------------------------------#
 class Show(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    venue_fk1 = db.Column(db.Integer(), db.ForeignKey('venue.id'), nullable=False)
-    artist_fk2 = db.Column(db.Integer(), db.ForeignKey('artist.id'), nullable=False)
-    start_time = db.Column(db.DateTime(), nullable=False)
+    venue_fk1 = db.Column(db.Integer(), db.ForeignKey('venue.id'),
+                          nullable=False)
+    artist_fk2 = db.Column(db.Integer(), db.ForeignKey('artist.id'),
+                           nullable=False)
+    start_time = db.Column(db.DateTime(),
+                           nullable=False)
 
     def __repr__(self):
-        return f"id: {self.id}, venue_fk: {self.venue_fk1}, artist_fk: {self.artist_fk2}, start_time: {self.start_time}"
+        return f"id: {self.id}, " \
+               f"venue_fk: {self.venue_fk1}, " \
+               f"artist_fk: {self.artist_fk2}, " \
+               f"start_time: {self.start_time}"
 
 
 class Venue(db.Model):
@@ -36,13 +42,25 @@ class Venue(db.Model):
     website_link = db.Column(db.String(500), nullable=False)
     seeking_talent = db.Column(db.Boolean(), nullable=True, default=False)
     seeking_description = db.Column(db.String(), nullable=True)
-    shows = db.relationship('Show', backref='venue', lazy='joined', cascade='all, delete')
+    shows = db.relationship('Show', backref='venue', lazy='joined',
+                            cascade='all, delete')
 
     def __repr__(self):
-        return f"Table id: {self.id}, name: {self.name}"
+        return f"id: {self.id}, " \
+               f"name: {self.name}, " \
+               f"city: {self.city}, " \
+               f"state: {self.state}, " \
+               f"phone: {self.phone}, " \
+               f"genres: {self.genres}, " \
+               f"facebook_link: {self.facebook_link}, " \
+               f"image_link: {self.image_link}, " \
+               f"website_link: {self.website_link}, " \
+               f"seeking_talent: {self.seeking_talent}, " \
+               f"seeking_description: {self.seeking_description}"
 
 
-# TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
+# TODO: implement any missing fields, as a database migration using
+#       Flask-Migrate (DONE)
 
 class Artist(db.Model):
     __tablename__ = 'artist'
@@ -58,13 +76,23 @@ class Artist(db.Model):
     website_link = db.Column(db.String(500), nullable=True)
     seeking_venues = db.Column(db.Boolean(), nullable=True, default=False)
     seeking_description = db.Column(db.String(), nullable=True)
-    shows = db.relationship('Show', backref='artist', lazy='joined', cascade='all, delete')
+    shows = db.relationship('Show', backref='artist', lazy='joined',
+                            cascade='all, delete')
 
     def __repr__(self):
-        return f"id: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, " \
-               f"phone: {self.phone}, genres: {self.genres}, facebook_link: {self.facebook_link}, " \
-               f"image_link: {self.image_link}, website_link: {self.website_link}, seeking_venues: {self.seeking_venues}, " \
+        return f"id: {self.id}, " \
+               f"name: {self.name}, " \
+               f"city: {self.city}, " \
+               f"state: {self.state}, " \
+               f"phone: {self.phone}, " \
+               f"genres: {self.genres}, " \
+               f"facebook_link: {self.facebook_link}, " \
+               f"image_link: {self.image_link}, " \
+               f"website_link: {self.website_link}, " \
+               f"seeking_venues: {self.seeking_venues}, " \
                f"seeking_description: {self.seeking_description}"
 
-# TODO: implement any missing fields, as a database migration using Flask-Migrate (DONE)
-# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration. (DONE)
+# TODO: implement any missing fields, as a database migration using
+#       Flask-Migrate (DONE)
+# TODO Implement Show and Artist models, and complete all model relationships
+#       and properties, as a database migration. (DONE)
