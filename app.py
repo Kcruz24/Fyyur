@@ -496,9 +496,10 @@ def create_artist_submission():
         finally:
             db.session.close()
     else:
-        flash(
-            f"Artist {form.name.data} could not be listed "
-            f"due to validation error!")
+        message = []
+        for field, err in form.errors.items():
+            message.append(field + " " + "|".join(err))
+        flash(f"Errors: {message}")
 
     if not error:
         return render_template('pages/home.html')
