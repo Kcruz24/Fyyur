@@ -120,7 +120,7 @@ def show_venue(venue_id):
     # TODO: replace with real venue data from the venues table,
     #       using venue_id (DONE)
 
-    get_venue = Venue.query.get(venue_id)
+    get_venue = Venue.query.get_or_404(venue_id)
     past_shows = []
     upcoming_shows = []
     past_shows_info = []
@@ -134,18 +134,19 @@ def show_venue(venue_id):
 
     for past_show in past_shows:
         past_shows_info.append({
-            "artist_id": Artist.query.get(past_show.artist_fk2).id,
-            "artist_name": Artist.query.get(past_show.artist_fk2).name,
-            "artist_image_link": Artist.query.get(
+            "artist_id": Artist.query.get_or_404(past_show.artist_fk2).id,
+            "artist_name": Artist.query.get_or_404(past_show.artist_fk2).name,
+            "artist_image_link": Artist.query.get_or_404(
                 past_show.artist_fk2).image_link,
             "start_time": str(past_show.start_time)
         })
 
     for upcoming_show in upcoming_shows:
         upcoming_shows_info.append({
-            "artist_id": Artist.query.get(upcoming_show.artist_fk2).id,
-            "artist_name": Artist.query.get(upcoming_show.artist_fk2).name,
-            "artist_image_link": Artist.query.get(
+            "artist_id": Artist.query.get_or_404(upcoming_show.artist_fk2).id,
+            "artist_name": Artist.query.get_or_404(
+                upcoming_show.artist_fk2).name,
+            "artist_image_link": Artist.query.get_or_404(
                 upcoming_show.artist_fk2).image_link,
             "start_time": str(upcoming_show.start_time)
         })
@@ -250,13 +251,13 @@ def delete_venue(venue_id):
     error = False
 
     try:
-        venue_to_delete = Venue.query.get(venue_id)
+        venue_to_delete = Venue.query.get_or_404(venue_id)
         db.session.delete(venue_to_delete)
         db.session.commit()
         flash("Successfully deleted " + venue_to_delete.name + ".")
     except():
         db.session.rollback()
-        flash("Could not delete " + Venue.query.get(venue_id).name + ".")
+        flash("Could not delete " + Venue.query.get_or_404(venue_id).name + ".")
         error = True
         print(sys.exc_info())
     finally:
@@ -338,7 +339,7 @@ def show_artist(artist_id):
     upcoming_shows_info = []
     past_shows = []
     past_shows_info = []
-    get_artist = Artist.query.get(artist_id)
+    get_artist = Artist.query.get_or_404(artist_id)
 
     for show in get_artist.shows:
         if show.start_time > datetime.now():
@@ -348,17 +349,18 @@ def show_artist(artist_id):
 
     for past_show in past_shows:
         past_shows_info.append({
-            "venue_id": Venue.query.get(past_show.venue_fk1).id,
-            "venue_name": Venue.query.get(past_show.venue_fk1).name,
-            "venue_image_link": Venue.query.get(past_show.venue_fk1).image_link,
+            "venue_id": Venue.query.get_or_404(past_show.venue_fk1).id,
+            "venue_name": Venue.query.get_or_404(past_show.venue_fk1).name,
+            "venue_image_link": Venue.query.get_or_404(
+                past_show.venue_fk1).image_link,
             "start_time": str(past_show.start_time)
         })
 
     for upcoming_show in upcoming_shows:
         upcoming_shows_info.append({
-            "venue_id": Venue.query.get(upcoming_show.venue_fk1).id,
-            "venue_name": Venue.query.get(upcoming_show.venue_fk1).name,
-            "venue_image_link": Venue.query.get(
+            "venue_id": Venue.query.get_or_404(upcoming_show.venue_fk1).id,
+            "venue_name": Venue.query.get_or_404(upcoming_show.venue_fk1).name,
+            "venue_image_link": Venue.query.get_or_404(
                 upcoming_show.venue_fk1).image_link,
             "start_time": str(upcoming_show.start_time)
         })
@@ -388,7 +390,7 @@ def show_artist(artist_id):
 #  ----------------------------------------------------------------
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
-    form = ArtistForm(request.form)
+    artist = Artist.query.get_or_404(artist_id)
     get_artist = Artist.query.get(artist_id)
 
     artist = {
@@ -447,7 +449,7 @@ def edit_artist_submission(artist_id):
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
-    form = VenueForm()
+    venue = Venue.query.get_or_404(venue_id)
 
     get_venue = Venue.query.get(venue_id)
 
@@ -476,7 +478,7 @@ def edit_venue_submission(venue_id):
     # venue record with ID <venue_id> using the new attributes
 
     error = False
-    venue = Venue.query.get(venue_id)
+    venue = Venue.query.get_or_404(venue_id)
     form = VenueForm(request.form)
 
     print(request.values)
@@ -584,13 +586,14 @@ def delete_artist(artist_id):
     error = False
 
     try:
-        artist_to_delete = Artist.query.get(artist_id)
+        artist_to_delete = Artist.query.get_or_404(artist_id)
         db.session.delete(artist_to_delete)
         db.session.commit()
         flash("Successfully deleted " + artist_to_delete.name + ".")
     except():
         db.session.rollback()
-        flash("Could not delete " + Artist.query.get(artist_id).name + ".")
+        flash(
+            "Could not delete " + Artist.query.get_or_404(artist_id).name + ".")
         error = True
         print(sys.exc_info())
     finally:
@@ -616,16 +619,16 @@ def shows():
     #       based on number of upcoming shows per venue. (DONE)
 
     all_shows = Show.query.all()
-
     data = []
 
     for show in all_shows:
         data.append({
-            "venue_id": Venue.query.get(show.venue_fk1).id,
-            "venue_name": Venue.query.get(show.venue_fk1).name,
-            "artist_id": Artist.query.get(show.artist_fk2).id,
-            "artist_name": Artist.query.get(show.artist_fk2).name,
-            "artist_image_link": Artist.query.get(show.artist_fk2).image_link,
+            "venue_id": Venue.query.get_or_404(show.venue_fk1).id,
+            "venue_name": Venue.query.get_or_404(show.venue_fk1).name,
+            "artist_id": Artist.query.get_or_404(show.artist_fk2).id,
+            "artist_name": Artist.query.get_or_404(show.artist_fk2).name,
+            "artist_image_link": Artist.query.get_or_404(
+                show.artist_fk2).image_link,
             "start_time": str(show.start_time)
         })
 
