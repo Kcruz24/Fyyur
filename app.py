@@ -2,15 +2,20 @@
 # Imports
 # ----------------------------------------------------------------------------#
 
-import sys
-import babel
 import logging
-import dateutil.parser
-
-from forms import *
 from logging import Formatter, FileHandler
-from models import Artist, Venue, Show, db, app
-from flask import render_template, request, flash, redirect, url_for, abort
+
+import babel
+import dateutil.parser
+from flask import Flask
+
+from venues.routes import venues
+from artists.routes import artists
+from shows.routes import shows
+from main.routes import main
+from error_handlers.routes import error_handlers
+
+app = Flask(__name__)
 
 
 # ----------------------------------------------------------------------------#
