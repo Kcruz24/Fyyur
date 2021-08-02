@@ -1,4 +1,4 @@
-from locals import state_choices, genres_choices
+from enums import Genre, State
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, URL, Regexp, Optional
@@ -32,7 +32,7 @@ class VenueForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=state_choices
+        choices=State.choices()
     )
     address = StringField(
         'address', validators=[DataRequired()]
@@ -47,7 +47,7 @@ class VenueForm(FlaskForm):
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],
-        choices=genres_choices
+        choices=Genre.choices()
     )
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
@@ -72,7 +72,7 @@ class ArtistForm(FlaskForm):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=state_choices
+        choices=State.choices()
     )
     phone = StringField(
         # TODO implement validation logic for phone (DONE)
@@ -85,7 +85,7 @@ class ArtistForm(FlaskForm):
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],
-        choices=genres_choices
+        choices=Genre.choices()
     )
     facebook_link = StringField(
         'facebook_link', validators=[URL(), Optional()]
