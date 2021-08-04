@@ -100,7 +100,7 @@
 
             console.log("Venue id", venueId)
 
-            fetch("/venues/" + venueId + "/delete", {
+            fetch("/venues/" + venueId, {
                 method: "DELETE"
             })
             .then(function () {

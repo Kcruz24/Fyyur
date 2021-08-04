@@ -223,7 +223,7 @@ def create_venue_submission():
     # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
 
 
-@app.route('/venues/<venue_id>/delete', methods=['DELETE'])
+@app.route('/venues/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
     # TODO: Complete this endpoint for taking a venue_id, and using
     #       SQLAlchemy ORM to delete a record. Handle cases where
@@ -511,7 +511,7 @@ def create_artist_submission():
     # flash('An error occurred. Artist ' + data.name + ' could not be listed.')
 
 
-@app.route('/artists/<artist_id>/delete', methods=['DELETE'])
+@app.route('/artists/<artist_id>', methods=['DELETE'])
 def delete_artist(artist_id):
     # TODO: Complete this endpoint for taking a venue_id, and using
     #       SQLAlchemy ORM to delete a record.
